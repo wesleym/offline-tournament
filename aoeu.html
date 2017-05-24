@@ -8,6 +8,7 @@
 
 <div id=chooser>
   <img id=chooser-left style="width:200px;height:200px">
+  <button type=button id=clear-button>Clear</button>
   <img id=chooser-right style="width:200px;height:200px">
 </div>
 
@@ -17,6 +18,31 @@ var ROUND_COUNT = Math.log2(TEAM_COUNT);
 </script>
 <script src=tournament.js></script>
 <script>
+function matchup(e) {
+  var round = e.target.dataset.round;
+  var seed = e.target.dataset.seed;
+
+  if (round == 0) {
+    return;
+  }
+
+  var first = finalStandings[round - 1][seed * 2];
+  var second = finalStandings[round - 1][seed * 2 + 1];
+  if (!first || !second) {
+    return;
+  }
+
+  var leftChoice = document.querySelector('#chooser-left');
+  var rightChoice = document.querySelector('#chooser-right');
+  leftChoice.src = first
+  leftChoice.round = round;
+  leftChoice.seed = seed;
+  rightChoice.src = second
+  rightChoice.round = round;
+  rightChoice.seed = seed;
+  document.querySelector('#chooser').style.display = 'block';
+}
+
 function main() {
   var target = document.querySelector('#target');
   var rows = [];
@@ -32,8 +58,10 @@ function main() {
       var data = document.createElement('td')
       data.rowSpan = Math.pow(2, i + 1);
       var image = document.createElement('img')
-      image.src = 'c7d.jpeg';
       image.id = 'round-' + i + '-seed-' + j;
+      image.dataset.round = i;
+      image.dataset.seed = j;
+      image.addEventListener('click', matchup);
       data.appendChild(image);
       rows[j * Math.pow(2, i + 1)].appendChild(data);
     }
@@ -78,8 +106,10 @@ function main() {
   var data = document.createElement('td')
   data.rowSpan = Math.pow(2, ROUND_COUNT);
   var image = document.createElement('img')
-  image.src = 'c7d.jpeg';
   image.id = 'round-' + (ROUND_COUNT - 1) + '-seed-0';
+  image.dataset.round = ROUND_COUNT - 1;
+  image.dataset.seed = 0;
+  image.addEventListener('click', matchup);
   data.appendChild(image);
   rows[0].appendChild(data);
 
@@ -97,8 +127,10 @@ function main() {
   var data = document.createElement('td')
   data.rowSpan = Math.pow(2, ROUND_COUNT);
   var image = document.createElement('img')
-  image.src = 'c7d.jpeg';
   image.id = 'round-' + ROUND_COUNT + '-seed-0';
+  image.dataset.round = ROUND_COUNT;
+  image.dataset.seed = 0;
+  image.addEventListener('click', matchup);
   data.appendChild(image);
   rows[0].appendChild(data);
 
@@ -116,8 +148,10 @@ function main() {
   var data = document.createElement('td')
   data.rowSpan = Math.pow(2, ROUND_COUNT);
   var image = document.createElement('img')
-  image.src = 'c7d.jpeg';
   image.id = 'round-' + (ROUND_COUNT - 1) + '-seed-1';
+  image.dataset.round = ROUND_COUNT - 1;
+  image.dataset.seed = 1;
+  image.addEventListener('click', matchup);
   data.appendChild(image);
   rows[0].appendChild(data);
 
@@ -158,8 +192,10 @@ function main() {
       var data = document.createElement('td')
       data.rowSpan = Math.pow(2, ROUND_COUNT - i - 1);
       var image = document.createElement('img')
-      image.src = 'c7d.jpeg';
       image.id = 'round-' + (ROUND_COUNT - i - 2) + '-seed-' + (Math.pow(2, i + 1) + j);
+      image.dataset.round = ROUND_COUNT - i - 2;
+      image.dataset.seed = Math.pow(2, i + 1) + j;
+      image.addEventListener('click', matchup);
       data.appendChild(image);
       rows[j * Math.pow(2, ROUND_COUNT - i - 1)].appendChild(data);
     }
@@ -170,8 +206,8 @@ function renderEndState() {
   for (var i = 0; i < ROUND_COUNT; i++) {
     for (var j = 0; j < Math.pow(2, ROUND_COUNT - i); j++) {
       var left = document.querySelector('#round-' + i + '-seed-' + j);
-      if (i < overallSlots.length && j < overallSlots[i].length) {
-        left.src = overallSlots[i][j];
+      if (finalStandings[i][j]) {
+        left.src = finalStandings[i][j];
       } else {
         left.src = 'circle.png';
       }

@@ -33,6 +33,17 @@ var initialSlots = [
     "32.png"
   ];
 
+var finalStandings;
+
+function populateFinalStandings() {
+  var l;
+  finalStandings = [initialSlots];
+  while ((l = finalStandings[finalStandings.length - 1].length) > 1) {
+    finalStandings.push(new Array(l / 2));
+  }
+}
+populateFinalStandings();
+
 var overallSlots = [initialSlots, []];
 var overallWinner;
 
@@ -63,7 +74,13 @@ document.querySelector('#back-button').addEventListener('click', function() {
   renderEndState();
 });
 
-function onChoice(userInput) {
+function onChoice(e, userInput) {
+  var round = e.target.dataset.round;
+  var seed = e.target.dataset.seed;
+
+  var img = document.querySelector('#round-' + round + '-seed-' + seed);
+  img.src = e.target.src;
+
   var i = overallSlots[overallSlots.length - 1].length
   var currentSlots = overallSlots[overallSlots.length - 2]
   var leftItem = currentSlots[2*i];
@@ -93,12 +110,15 @@ function onChoice(userInput) {
   document.querySelector('#chooser-right').src = currentSlots[2*i + 1]
 }
 
-document.querySelector('#chooser-left').addEventListener('click', function() {
-  onChoice(0);
+document.querySelector('#chooser-left').addEventListener('click', function(e) {
+  onChoice(e, 0);
 });
 
-document.querySelector('#chooser-right').addEventListener('click', function() {
-  onChoice(1);
+document.querySelector('#chooser-right').addEventListener('click', function(e) {
+  onChoice(e, 1);
+});
+
+document.querySelector('#clear-button').addEventListener('click', function(e) {
 });
 
 var currentRound = 1;
