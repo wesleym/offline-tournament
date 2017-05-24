@@ -1,0 +1,50 @@
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  vertical-align: middle;
+  min-width: 40px;
+  /*border: thin red solid;*/
+}
+
+.bottom {
+  border-bottom: solid;
+}
+
+.top {
+  border-top: solid;
+}
+
+.left {
+  border-left: solid;
+}
+
+.right {
+  border-right: solid;
+}
+
+img {
+  width: 60px;
+  height: 60px;
+}
+
+html, body, #chooser {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#chooser {
+  display: none;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 200px;
+  text-align: center;
+}
