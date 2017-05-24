@@ -35,11 +35,11 @@ function matchup(e) {
   var leftChoice = document.querySelector('#chooser-left');
   var rightChoice = document.querySelector('#chooser-right');
   leftChoice.src = first
-  leftChoice.round = round;
-  leftChoice.seed = seed;
+  leftChoice.dataset.round = round;
+  leftChoice.dataset.seed = seed;
   rightChoice.src = second
-  rightChoice.round = round;
-  rightChoice.seed = seed;
+  rightChoice.dataset.round = round;
+  rightChoice.dataset.seed = seed;
   document.querySelector('#chooser').style.display = 'block';
 }
 

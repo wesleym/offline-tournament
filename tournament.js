@@ -78,6 +78,8 @@ function onChoice(e, userInput) {
   var round = e.target.dataset.round;
   var seed = e.target.dataset.seed;
 
+  finalStandings[round][seed] = e.target.src;
+
   var img = document.querySelector('#round-' + round + '-seed-' + seed);
   img.src = e.target.src;
 
