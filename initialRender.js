@@ -8,7 +8,7 @@ function createImage(round, seed) {
 }
 
 function renderLeaderLines(rows, round) {
-  for (var j = 0; j < Math.ceil(Math.pow(2, ROUND_COUNT - round)); j++) {
+  for (var j = 0; j < Math.pow(2, ROUND_COUNT - round); j++) {
     var classes = ['lines'];
     var data = document.createElement('td')
     data.rowSpan = Math.pow(2, round);

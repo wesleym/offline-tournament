@@ -1,4 +1,5 @@
 var ENTRANTS = [
+  "0.png",
   "1.png",
   "2.png",
   "3.png",
@@ -12,7 +13,7 @@ var ENTRANTS = [
   "11.png",
   "12.png",
   "13.png",
-  null,
+  "14.png",
   "15.png",
   "16.png",
   "17.png",
@@ -29,8 +30,12 @@ var ENTRANTS = [
   "28.png",
   "29.png",
   "30.png",
-  "31.png"
+  "31.png",
 ];
+
+// You must have exactly 2, 4, 8, 16, ... entrants and no missing entrants to
+// disable byes
+var ENABLE_BYES = false;
 
 for (var i = ENTRANTS.length; i < Math.pow(2, Math.ceil(Math.log2(ENTRANTS.length))); i++) {
   ENTRANTS.push(null);

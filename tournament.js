@@ -85,6 +85,9 @@ function matchup(e) {
 
   var first = finalStandings[round - 1][seed * 2];
   var second = finalStandings[round - 1][seed * 2 + 1];
+  if ((!first || !second) && !ENABLE_BYES) {
+    return;
+  }
   if (!first && !second) {
     return;
   } else if (!first && second) {
