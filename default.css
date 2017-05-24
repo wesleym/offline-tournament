@@ -6,7 +6,7 @@ table {
 td {
   vertical-align: middle;
   min-width: 40px;
-  /*border: thin red solid;*/
+  border: thin red solid;
 }
 
 .bottom {
