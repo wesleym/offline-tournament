@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <button type=button id=next-button>Next</button>
+<button type=button id=back-button>Back</button>
 
 <table id=target>
 </table>
@@ -166,11 +167,14 @@ function main() {
 }
 
 function renderEndState() {
-  for (var i = 0; i < overallSlots.length; i++) {
-    for (var j = 0; j < overallSlots[i].length; j++) {
-      console.log(i, j, overallSlots[i][j])
+  for (var i = 0; i < ROUND_COUNT; i++) {
+    for (var j = 0; j < Math.pow(2, ROUND_COUNT - i); j++) {
       var left = document.querySelector('#round-' + i + '-seed-' + j);
-      left.src = overallSlots[i][j];
+      if (i < overallSlots.length && j < overallSlots[i].length) {
+        left.src = overallSlots[i][j];
+      } else {
+        left.src = 'circle.png';
+      }
     }
   }
 }

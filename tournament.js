@@ -33,14 +33,11 @@ var initialSlots = [
     "32.png"
   ];
 
-var currentSlots = initialSlots;
-var nextSlots = [];
 var overallSlots = [initialSlots, []];
 var overallWinner;
-var slotLen = currentSlots.length;
 
-document.querySelector('#chooser-left').src = currentSlots[0]
-document.querySelector('#chooser-right').src = currentSlots[1]
+document.querySelector('#chooser-left').src = overallSlots[0][0]
+document.querySelector('#chooser-right').src = overallSlots[0][1]
 
 function showChooser() {
   document.querySelector('#chooser').style.display = 'block';
@@ -51,9 +48,24 @@ function hideChooser() {
 }
 
 document.querySelector('#next-button').addEventListener('click', showChooser);
+document.querySelector('#back-button').addEventListener('click', function() {
+  if (overallSlots[overallSlots.length - 1].length == 0) {
+    if (overallSlots.length == 2) {
+      return;
+    }
+    overallSlots.pop()
+  }
+  overallSlots[overallSlots.length - 1].pop()
+  var i = overallSlots[overallSlots.length - 1].length
+  var currentSlots = overallSlots[overallSlots.length - 2]
+  document.querySelector('#chooser-left').src = currentSlots[2*i]
+  document.querySelector('#chooser-right').src = currentSlots[2*i + 1]
+  renderEndState();
+});
 
-function onChoice() {
-  var userInput = "0";
+function onChoice(userInput) {
+  var i = overallSlots[overallSlots.length - 1].length
+  var currentSlots = overallSlots[overallSlots.length - 2]
   var leftItem = currentSlots[2*i];
   var rightItem = currentSlots[(2*i)+1];
 
@@ -64,20 +76,16 @@ function onChoice() {
       currentWinner = rightItem;
   }
 
-      nextSlots.push(currentWinner);
+      overallSlots[overallSlots.length-1].push(currentWinner);
 
   if (currentRound == ROUND_COUNT) {
       overallWinner = currentWinner;
   }
   i++;
   hideChooser();
-  overallSlots[overallSlots.length-1].push(currentWinner);
   renderEndState();
-  if (2*i >= slotLen) {
-    i = 0;
+  if (2*i >= overallSlots[overallSlots.length-2].length) {
         overallSlots.push([]);
-        currentSlots = nextSlots;
-        nextSlots = [];
     currentRound++;
     slotLen = currentSlots.length;
   }
@@ -94,4 +102,3 @@ document.querySelector('#chooser-right').addEventListener('click', function() {
 });
 
 var currentRound = 1;
-var i = 0;
