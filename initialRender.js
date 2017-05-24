@@ -105,10 +105,10 @@ function initialRender() {
 
   for (var i = ROUND_COUNT - 2; i >= 0; i--) {
     // Add trailer lines
-    for (var j = 0; j < Math.pow(2, ((ROUND_COUNT - 2) - i) + 2); j++) {
+    for (var j = 0; j < Math.pow(2, ROUND_COUNT - i); j++) {
       var classes = [];
       var data = document.createElement('td')
-      data.rowSpan = Math.pow(2, ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 2);
+      data.rowSpan = Math.pow(2, i);
       if (j % 4 == 1) {
         classes.push('bottom');
       } else if (j % 4 == 2) {
@@ -118,30 +118,30 @@ function initialRender() {
         classes.push('right');
       }
       data.className = classes.join(' ');
-      rows[j * Math.pow(2, ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 2)].appendChild(data);
+      rows[j * Math.pow(2, i)].appendChild(data);
     }
 
     // Add leader lines
-    for (var j = 0; j < Math.pow(2, ((ROUND_COUNT - 2) - i) + 2); j++) {
+    for (var j = 0; j < Math.pow(2, ROUND_COUNT - i); j++) {
       var classes = [];
       var data = document.createElement('td')
-      data.rowSpan = Math.pow(2, ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 2);
+      data.rowSpan = Math.pow(2, i);
       if (j % 2 == 0) {
         classes.push('bottom');
       } else {
         classes.push('top');
       }
       data.className = classes.join(' ');
-      rows[j * Math.pow(2, ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 2)].appendChild(data);
+      rows[j * Math.pow(2, i)].appendChild(data);
     }
 
     // Add picture
-    for (var j = 0; j < Math.pow(2, ((ROUND_COUNT - 2) - i) + 1); j++) {
+    for (var j = 0; j < Math.pow(2, ROUND_COUNT - i - 1); j++) {
       var data = document.createElement('td')
-      data.rowSpan = Math.pow(2, ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 1);
-      var image = createImage(ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 2, Math.pow(2, ((ROUND_COUNT - 2) - i) + 1) + j)
+      data.rowSpan = Math.pow(2, i + 1);
+      var image = createImage(i, Math.pow(2, ROUND_COUNT - i - 1) + j)
       data.appendChild(image);
-      rows[j * Math.pow(2, ROUND_COUNT - ((ROUND_COUNT - 2) - i) - 1)].appendChild(data);
+      rows[j * Math.pow(2, i + 1)].appendChild(data);
     }
   }
 }
