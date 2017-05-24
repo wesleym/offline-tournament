@@ -12,7 +12,7 @@ var ENTRANTS = [
   "11.png",
   "12.png",
   "13.png",
-  "14.png",
+  null,
   "15.png",
   "16.png",
   "17.png",
@@ -29,9 +29,12 @@ var ENTRANTS = [
   "28.png",
   "29.png",
   "30.png",
-  "31.png",
-  "32.png"
+  "31.png"
 ];
+
+for (var i = ENTRANTS.length; i < Math.pow(2, Math.ceil(Math.log2(ENTRANTS.length))); i++) {
+  ENTRANTS.push(null);
+}
 
 var TEAM_COUNT = ENTRANTS.length;
 var ROUND_COUNT = Math.log2(TEAM_COUNT);
