@@ -52,7 +52,7 @@ function hideChooser() {
 
 document.querySelector('#next-button').addEventListener('click', showChooser);
 
-document.querySelector('#chooser-left').addEventListener('click', function() {
+function onChoice() {
   var userInput = "0";
   var leftItem = currentSlots[2*i];
   var rightItem = currentSlots[(2*i)+1];
@@ -83,38 +83,14 @@ document.querySelector('#chooser-left').addEventListener('click', function() {
   }
   document.querySelector('#chooser-left').src = currentSlots[2*i]
   document.querySelector('#chooser-right').src = currentSlots[2*i + 1]
+}
+
+document.querySelector('#chooser-left').addEventListener('click', function() {
+  onChoice(0);
 });
+
 document.querySelector('#chooser-right').addEventListener('click', function() {
-  var userInput = "1"
-    var leftItem = currentSlots[2*i];
-    var rightItem = currentSlots[(2*i)+1];
-
-  var currentWinner;
-  if (userInput == "0") {
-      currentWinner = leftItem;
-  } else if(userInput == "1") {
-      currentWinner = rightItem;
-  }
-
-      nextSlots.push(currentWinner);
-
-  if (currentRound == ROUND_COUNT) {
-      overallWinner = currentWinner;
-  }
-  i++;
-  hideChooser();
-  overallSlots[overallSlots.length-1].push(currentWinner);
-  renderEndState();
-  if (2*i >= slotLen) {
-    i = 0;
-    overallSlots.push([]);
-        currentSlots = nextSlots;
-        nextSlots = [];
-    currentRound++;
-    slotLen = currentSlots.length;
-  }
-  document.querySelector('#chooser-left').src = currentSlots[2*i]
-  document.querySelector('#chooser-right').src = currentSlots[2*i + 1]
+  onChoice(1);
 });
 
 var currentRound = 1;
