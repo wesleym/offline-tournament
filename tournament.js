@@ -44,12 +44,6 @@ function populateFinalStandings() {
 }
 populateFinalStandings();
 
-var overallSlots = [initialSlots, []];
-var overallWinner;
-
-document.querySelector('#chooser-left').src = overallSlots[0][0]
-document.querySelector('#chooser-right').src = overallSlots[0][1]
-
 function showChooser() {
   document.querySelector('#chooser').style.display = 'block';
 }
@@ -58,58 +52,26 @@ function hideChooser() {
   document.querySelector('#chooser').style.display = 'none';
 }
 
-document.querySelector('#next-button').addEventListener('click', showChooser);
-document.querySelector('#back-button').addEventListener('click', function() {
-  if (overallSlots[overallSlots.length - 1].length == 0) {
-    if (overallSlots.length == 2) {
-      return;
-    }
-    overallSlots.pop()
+function bubbleClear(round, seed) {
+  console.log('bubbleClear', round, seed)
+  for (var i = round + 1; i <= ROUND_COUNT; i++) {
+    seed = Math.floor(seed / 2);
+    finalStandings[i][seed] = null;
+    console.log(i, seed)
   }
-  overallSlots[overallSlots.length - 1].pop()
-  var i = overallSlots[overallSlots.length - 1].length
-  var currentSlots = overallSlots[overallSlots.length - 2]
-  document.querySelector('#chooser-left').src = currentSlots[2*i]
-  document.querySelector('#chooser-right').src = currentSlots[2*i + 1]
-  renderEndState();
-});
+}
 
 function onChoice(e, userInput) {
-  var round = e.target.dataset.round;
-  var seed = e.target.dataset.seed;
+  var round = +e.target.dataset.round;
+  var seed = +e.target.dataset.seed;
 
+  if (finalStandings[round][seed] != e.target.src) {
+    bubbleClear(round, seed);
+  }
   finalStandings[round][seed] = e.target.src;
 
-  var img = document.querySelector('#round-' + round + '-seed-' + seed);
-  img.src = e.target.src;
-
-  var i = overallSlots[overallSlots.length - 1].length
-  var currentSlots = overallSlots[overallSlots.length - 2]
-  var leftItem = currentSlots[2*i];
-  var rightItem = currentSlots[(2*i)+1];
-
-  var currentWinner;
-  if (userInput == "0") {
-      currentWinner = leftItem;
-  } else if(userInput == "1") {
-      currentWinner = rightItem;
-  }
-
-      overallSlots[overallSlots.length-1].push(currentWinner);
-
-  if (currentRound == ROUND_COUNT) {
-      overallWinner = currentWinner;
-  }
-  i++;
   hideChooser();
   renderEndState();
-  if (2*i >= overallSlots[overallSlots.length-2].length) {
-        overallSlots.push([]);
-    currentRound++;
-    slotLen = currentSlots.length;
-  }
-  document.querySelector('#chooser-left').src = currentSlots[2*i]
-  document.querySelector('#chooser-right').src = currentSlots[2*i + 1]
 }
 
 document.querySelector('#chooser-left').addEventListener('click', function(e) {
@@ -121,6 +83,14 @@ document.querySelector('#chooser-right').addEventListener('click', function(e) {
 });
 
 document.querySelector('#clear-button').addEventListener('click', function(e) {
+  var round = +e.target.dataset.round;
+  var seed = +e.target.dataset.seed;
+
+  finalStandings[round][seed] = null;
+  bubbleClear(round, seed);
+
+  hideChooser();
+  renderEndState();
 });
 
 var currentRound = 1;
