@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<button type=button id=next-button>Next</button>
+
+<table id=target>
+</table>
+
+<div id=chooser>
+  <img id=chooser-left style="width:200px;height:200px">
+  <img id=chooser-right style="width:200px;height:200px">
+</div>
+
+<script src=tournament.js></script>
+<script>
+function main() {
+  var levels = 5; // entrants = 4. 2^(3-1) = 8
+  var rowCount = Math.pow(2, levels);
+
+  var target = document.querySelector('#target');
+  var rows = [];
+  for (var i = 0; i < rowCount; i++) {
+    var row = document.createElement('tr');
+    rows.push(row);
+    target.appendChild(row);
+  }
+
+  for (var i = 0; i < levels - 1; i++) {
+    // Add picture
+    for (var j = 0; j < Math.pow(2, levels - i - 1); j++) {
+      var data = document.createElement('td')
+      data.rowSpan = Math.pow(2, i + 1);
+      var image = document.createElement('img')
+      image.src = 'c7d.jpeg';
+      image.id = 'round-' + i + '-seed-' + j;
+      data.appendChild(image);
+      rows[j * Math.pow(2, i + 1)].appendChild(data);
+    }
+
+    // Add leader lines
+    for (var j = 0; j < Math.pow(2, levels - i); j++) {
+      var classes = [];
+      var data = document.createElement('td')
+      data.rowSpan = Math.pow(2, i);
+      if (j % 2 == 0) {
+        classes.push('bottom');
+      } else {
+        classes.push('top');
+      }
+      data.className = classes.join(' ');
+      rows[j * Math.pow(2, i)].appendChild(data);
+    }
+
+    if (i == levels - 1) {
+      break;
+    }
+
+    // Add trailer lines
+    for (var j = 0; j < Math.pow(2, levels - i); j++) {
+      var classes = [];
+      var data = document.createElement('td')
+      data.rowSpan = Math.pow(2, i);
+      if (j % 4 == 1) {
+        classes.push('bottom');
+      } else if (j % 4 == 2) {
+        classes.push('top');
+      }
+      if (j % 4 == 1 || j % 4 == 2) {
+        classes.push('left');
+      }
+      data.className = classes.join(' ');
+      rows[j * Math.pow(2, i)].appendChild(data);
+    }
+  }
+
+  // Add picture
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels);
+  var image = document.createElement('img')
+  image.src = 'c7d.jpeg';
+  image.id = 'round-' + (levels - 1) + '-seed-0';
+  data.appendChild(image);
+  rows[0].appendChild(data);
+
+  // Add trailer
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels - 1);
+  data.className = 'bottom';
+  rows[0].appendChild(data);
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels - 1);
+  data.className = 'top';
+  rows[Math.pow(2, levels - 1)].appendChild(data);
+
+  // Add picture
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels);
+  var image = document.createElement('img')
+  image.src = 'c7d.jpeg';
+  image.id = 'round-' + levels + '-seed-0';
+  data.appendChild(image);
+  rows[0].appendChild(data);
+
+  // Add trailer
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels - 1);
+  data.className = 'bottom';
+  rows[0].appendChild(data);
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels - 1);
+  data.className = 'top';
+  rows[Math.pow(2, levels - 1)].appendChild(data);
+
+  // Add picture
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, levels);
+  var image = document.createElement('img')
+  image.src = 'c7d.jpeg';
+  image.id = 'round-' + (levels - 1) + '-seed-1';
+  data.appendChild(image);
+  rows[0].appendChild(data);
+
+  for (var i = 0; i < levels - 1; i++) {
+    // Add trailer lines
+    for (var j = 0; j < Math.pow(2, i + 2); j++) {
+      var classes = [];
+      var data = document.createElement('td')
+      data.rowSpan = Math.pow(2, levels - i - 2);
+      if (j % 4 == 1) {
+        classes.push('bottom');
+      } else if (j % 4 == 2) {
+        classes.push('top');
+      }
+      if (j % 4 == 1 || j % 4 == 2) {
+        classes.push('right');
+      }
+      data.className = classes.join(' ');
+      rows[j * Math.pow(2, levels - i - 2)].appendChild(data);
+    }
+
+    // Add leader lines
+    for (var j = 0; j < Math.pow(2, i + 2); j++) {
+      var classes = [];
+      var data = document.createElement('td')
+      data.rowSpan = Math.pow(2, levels - i - 2);
+      if (j % 2 == 0) {
+        classes.push('bottom');
+      } else {
+        classes.push('top');
+      }
+      data.className = classes.join(' ');
+      rows[j * Math.pow(2, levels - i - 2)].appendChild(data);
+    }
+
+    // Add picture
+    for (var j = 0; j < Math.pow(2, i + 1); j++) {
+      var data = document.createElement('td')
+      data.rowSpan = Math.pow(2, levels - i - 1);
+      var image = document.createElement('img')
+      image.src = 'c7d.jpeg';
+      image.id = 'round-' + (levels - i - 2) + '-seed-' + (Math.pow(2, i + 1) + j);
+      data.appendChild(image);
+      rows[j * Math.pow(2, levels - i - 1)].appendChild(data);
+    }
+  }
+}
+
+function renderEndState() {
+  for (var i = 0; i < overallSlots.length; i++) {
+    for (var j = 0; j < overallSlots[i].length; j++) {
+      console.log(i, j, overallSlots[i][j])
+      var left = document.querySelector('#round-' + i + '-seed-' + j);
+      left.src = overallSlots[i][j];
+    }
+  }
+}
+
+main();
+renderEndState();
+</script>
+
+<style>
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td {
+  vertical-align: middle;
+  min-width: 40px;
+  /*border: thin red solid;*/
+}
+
+.bottom {
+  border-bottom: solid;
+}
+
+.top {
+  border-top: solid;
+}
+
+.left {
+  border-left: solid;
+}
+
+.right {
+  border-right: solid;
+}
+
+img {
+  width: 60px;
+  height: 60px;
+}
+
+html, body, #chooser {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#chooser {
+  display: none;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 200px;
+  text-align: center;
+}
+</style>
