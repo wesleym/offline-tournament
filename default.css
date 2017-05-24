@@ -1,12 +1,23 @@
 table {
   border-spacing: 0;
   border-collapse: collapse;
+  height: 100%;
+  width: 100%;
 }
 
 td {
   vertical-align: middle;
-  min-width: 40px;
+  text-align: center;
   /*border: thin red solid;*/
+}
+
+.lines {
+  min-width: 10px;
+}
+
+.image-container {
+  padding: 0 2px;
+  width: 48px;
 }
 
 .bottom {
@@ -26,8 +37,8 @@ td {
 }
 
 img {
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
 }
 
 html, body, #chooser {

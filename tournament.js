@@ -85,7 +85,23 @@ function matchup(e) {
 
   var first = finalStandings[round - 1][seed * 2];
   var second = finalStandings[round - 1][seed * 2 + 1];
-  if (!first || !second) {
+  if (!first && !second) {
+    return;
+  } else if (!first && second) {
+    if (finalStandings[round][seed]) {
+      finalStandings[round][seed] = null;
+    } else {
+      finalStandings[round][seed] = second;
+    }
+    renderEndState();
+    return;
+  } else if (first && !second) {
+    if (finalStandings[round][seed]) {
+      finalStandings[round][seed] = null;
+    } else {
+      finalStandings[round][seed] = first;
+    }
+    renderEndState();
     return;
   }
 
@@ -113,6 +129,13 @@ function renderEndState() {
         left.src = 'circle.png';
       }
     }
+  }
+  if (finalStandings[ROUND_COUNT][0]) {
+    document.querySelector('#round-' + ROUND_COUNT + '-seed-0').style.width = '200px';
+    document.querySelector('#round-' + ROUND_COUNT + '-seed-0').style.height = '200px';
+  } else {
+    document.querySelector('#round-' + ROUND_COUNT + '-seed-0').style.width = null;
+    document.querySelector('#round-' + ROUND_COUNT + '-seed-0').style.height = null;
   }
   localStorage['finalStandings'] = JSON.stringify(finalStandings);
 }

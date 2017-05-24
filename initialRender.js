@@ -9,7 +9,7 @@ function createImage(round, seed) {
 
 function renderLeaderLines(rows, round) {
   for (var j = 0; j < Math.pow(2, ROUND_COUNT - round); j++) {
-    var classes = [];
+    var classes = ['lines'];
     var data = document.createElement('td')
     data.rowSpan = Math.pow(2, round);
     if (j % 2 == 0) {
@@ -24,7 +24,7 @@ function renderLeaderLines(rows, round) {
 
 function renderTrailerLines(rows, round, side) {
   for (var j = 0; j < Math.pow(2, ROUND_COUNT - round); j++) {
-    var classes = [];
+    var classes = ['lines'];
     var data = document.createElement('td')
     data.rowSpan = Math.pow(2, round);
     if (j % 4 == 1) {
@@ -44,6 +44,7 @@ function renderImages(rows, round, half) {
   for (var j = 0; j < Math.pow(2, ROUND_COUNT - round - 1); j++) {
     var data = document.createElement('td')
     data.rowSpan = Math.pow(2, round + 1);
+    data.className = 'image-container';
     var image = createImage(round, Math.pow(2, ROUND_COUNT - round - 1) * half + j)
     data.appendChild(image);
     rows[j * Math.pow(2, round + 1)].appendChild(data);
@@ -70,7 +71,12 @@ function initialRender() {
   renderLeaderLines(rows, ROUND_COUNT - 1);
 
   // Winner
-  renderImages(rows, ROUND_COUNT, 0);
+  var data = document.createElement('td')
+  data.rowSpan = Math.pow(2, ROUND_COUNT);
+  data.className = 'image-container';
+  var image = createImage(ROUND_COUNT, 0)
+  data.appendChild(image);
+  rows[0].appendChild(data);
 
   // Finalist
   renderLeaderLines(rows, ROUND_COUNT - 1);
