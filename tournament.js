@@ -76,8 +76,8 @@ document.querySelector('#clear-button').addEventListener('click', function(e) {
 });
 
 function matchup(e) {
-  var round = e.target.dataset.round;
-  var seed = e.target.dataset.seed;
+  var round = +e.target.dataset.round;
+  var seed = +e.target.dataset.seed;
 
   if (round == 0) {
     return;
