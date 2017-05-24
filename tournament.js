@@ -38,11 +38,29 @@ var initialSlots = [
 
 var finalStandings;
 
-function populateFinalStandings() {
+function clearAll() {
   var l;
   finalStandings = [initialSlots];
   while ((l = finalStandings[finalStandings.length - 1].length) > 1) {
     finalStandings.push(new Array(l / 2));
+  }
+}
+
+document.querySelector('#clear-all-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (e.target.elements.namedItem('clear-all-input').value != 'clear all') {
+    return;
+  }
+  clearAll();
+  renderEndState();
+  e.target.elements.namedItem('clear-all-input').value = '';
+});
+
+function populateFinalStandings() {
+  if (localStorage['finalStandings']) {
+    finalStandings = JSON.parse(localStorage['finalStandings'])
+  } else {
+    clearAll();
   }
 }
 populateFinalStandings();
@@ -285,6 +303,7 @@ function renderEndState() {
       }
     }
   }
+  localStorage['finalStandings'] = JSON.stringify(finalStandings);
 }
 
 main();
