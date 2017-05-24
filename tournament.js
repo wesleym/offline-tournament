@@ -126,6 +126,15 @@ function matchup(e) {
   document.querySelector('#chooser').style.display = 'block';
 }
 
+function createImage(round, seed) {
+  var image = document.createElement('img')
+  image.id = 'round-' + round + '-seed-' + seed;
+  image.dataset.round = round;
+  image.dataset.seed = seed;
+  image.addEventListener('click', matchup);
+  return image;
+}
+
 function main() {
   var target = document.querySelector('#target');
   var rows = [];
@@ -140,11 +149,7 @@ function main() {
     for (var j = 0; j < Math.pow(2, ROUND_COUNT - i - 1); j++) {
       var data = document.createElement('td')
       data.rowSpan = Math.pow(2, i + 1);
-      var image = document.createElement('img')
-      image.id = 'round-' + i + '-seed-' + j;
-      image.dataset.round = i;
-      image.dataset.seed = j;
-      image.addEventListener('click', matchup);
+      var image = createImage(i, j);
       data.appendChild(image);
       rows[j * Math.pow(2, i + 1)].appendChild(data);
     }
@@ -188,11 +193,7 @@ function main() {
   // Add picture
   var data = document.createElement('td')
   data.rowSpan = Math.pow(2, ROUND_COUNT);
-  var image = document.createElement('img')
-  image.id = 'round-' + (ROUND_COUNT - 1) + '-seed-0';
-  image.dataset.round = ROUND_COUNT - 1;
-  image.dataset.seed = 0;
-  image.addEventListener('click', matchup);
+  var image = createImage(ROUND_COUNT - 1, 0);
   data.appendChild(image);
   rows[0].appendChild(data);
 
@@ -209,11 +210,7 @@ function main() {
   // Add picture
   var data = document.createElement('td')
   data.rowSpan = Math.pow(2, ROUND_COUNT);
-  var image = document.createElement('img')
-  image.id = 'round-' + ROUND_COUNT + '-seed-0';
-  image.dataset.round = ROUND_COUNT;
-  image.dataset.seed = 0;
-  image.addEventListener('click', matchup);
+  var image = createImage(ROUND_COUNT, 0);
   data.appendChild(image);
   rows[0].appendChild(data);
 
@@ -230,11 +227,7 @@ function main() {
   // Add picture
   var data = document.createElement('td')
   data.rowSpan = Math.pow(2, ROUND_COUNT);
-  var image = document.createElement('img')
-  image.id = 'round-' + (ROUND_COUNT - 1) + '-seed-1';
-  image.dataset.round = ROUND_COUNT - 1;
-  image.dataset.seed = 1;
-  image.addEventListener('click', matchup);
+  var image = createImage(ROUND_COUNT - 1, 1)
   data.appendChild(image);
   rows[0].appendChild(data);
 
@@ -274,11 +267,7 @@ function main() {
     for (var j = 0; j < Math.pow(2, i + 1); j++) {
       var data = document.createElement('td')
       data.rowSpan = Math.pow(2, ROUND_COUNT - i - 1);
-      var image = document.createElement('img')
-      image.id = 'round-' + (ROUND_COUNT - i - 2) + '-seed-' + (Math.pow(2, i + 1) + j);
-      image.dataset.round = ROUND_COUNT - i - 2;
-      image.dataset.seed = Math.pow(2, i + 1) + j;
-      image.addEventListener('click', matchup);
+      var image = createImage(ROUND_COUNT - i - 2, Math.pow(2, i + 1) + j)
       data.appendChild(image);
       rows[j * Math.pow(2, ROUND_COUNT - i - 1)].appendChild(data);
     }
