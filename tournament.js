@@ -1,8 +1,3 @@
-var numTeams = 32;
-var numRounds = Math.ceil(Math.log2(numTeams)); //The math checks out. Maybe
-
-// alert("Number of rounds is: " + numRounds);
-
 var initialSlots = [
     "1.png",
     "2.png",
@@ -71,7 +66,7 @@ document.querySelector('#chooser-left').addEventListener('click', function() {
 
       nextSlots.push(currentWinner);
 
-  if (currentRound == numRounds) {
+  if (currentRound == ROUND_COUNT) {
       overallWinner = currentWinner;
   }
   i++;
@@ -103,7 +98,7 @@ document.querySelector('#chooser-right').addEventListener('click', function() {
 
       nextSlots.push(currentWinner);
 
-  if (currentRound == numRounds) {
+  if (currentRound == ROUND_COUNT) {
       overallWinner = currentWinner;
   }
   i++;
