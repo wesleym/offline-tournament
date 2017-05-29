@@ -56,6 +56,30 @@ html, body, #chooser {
   left: 0;
   right: 0;
   bottom: 0;
-  padding-top: 200px;
   text-align: center;
+}
+
+#chooser-left, #chooser-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#chooser-left {
+  left: 0;
+}
+
+#chooser-right {
+  right: 0;
+}
+
+#clear-button {
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  right: auto;
 }

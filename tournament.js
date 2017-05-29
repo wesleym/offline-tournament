@@ -47,10 +47,10 @@ function onChoice(e, userInput) {
   var round = +e.target.dataset.round;
   var seed = +e.target.dataset.seed;
 
-  if (finalStandings[round][seed] != e.target.src) {
+  if (finalStandings[round][seed] != e.target.dataset.src) {
     bubbleClear(round, seed);
   }
-  finalStandings[round][seed] = e.target.src;
+  finalStandings[round][seed] = e.target.dataset.src;
 
   hideChooser();
   renderEndState();
@@ -111,10 +111,12 @@ function matchup(e) {
   var leftChoice = document.querySelector('#chooser-left');
   var rightChoice = document.querySelector('#chooser-right');
   var clearButton = document.querySelector('#clear-button');
-  leftChoice.src = first
+  leftChoice.style.backgroundImage = "url('" + first + "')";
+  leftChoice.dataset.src = first;
   leftChoice.dataset.round = round;
   leftChoice.dataset.seed = seed;
-  rightChoice.src = second
+  rightChoice.style.backgroundImage = "url('" + second + "')";
+  rightChoice.dataset.src = second;
   rightChoice.dataset.round = round;
   rightChoice.dataset.seed = seed;
   clearButton.dataset.round = round;
