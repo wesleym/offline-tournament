@@ -77,9 +77,18 @@ html, body, #chooser {
   right: 0;
 }
 
-#clear-button {
+#chooser-clear {
   position: absolute;
+  width: 100%;
   bottom: 0;
-  left: auto;
-  right: auto;
+  text-align: center;
+}
+
+.chooser-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 28pt;
+  background-color: white;
 }

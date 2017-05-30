@@ -2,7 +2,11 @@ var finalStandings;
 
 function clearAll() {
   var l;
-  finalStandings = [ENTRANTS];
+  entrants = [];
+  for (var i = 0; i < ENTRANTS.length; i++) {
+    entrants.push(i);
+  }
+  finalStandings = [entrants];
   while ((l = finalStandings[finalStandings.length - 1].length) > 1) {
     finalStandings.push(new Array(l / 2));
   }
@@ -47,10 +51,10 @@ function onChoice(e, userInput) {
   var round = +e.target.dataset.round;
   var seed = +e.target.dataset.seed;
 
-  if (finalStandings[round][seed] != e.target.dataset.src) {
+  if (finalStandings[round][seed] != e.target.dataset.entrant) {
     bubbleClear(round, seed);
   }
-  finalStandings[round][seed] = e.target.dataset.src;
+  finalStandings[round][seed] = e.target.dataset.entrant;
 
   hideChooser();
   renderEndState();
@@ -85,21 +89,21 @@ function matchup(e) {
 
   var first = finalStandings[round - 1][seed * 2];
   var second = finalStandings[round - 1][seed * 2 + 1];
-  if ((!first || !second) && !ENABLE_BYES) {
+  if ((first == null || second == null) && !ENABLE_BYES) {
     return;
   }
-  if (!first && !second) {
+  if (first == null && second == null) {
     return;
-  } else if (!first && second) {
-    if (finalStandings[round][seed]) {
+  } else if (first == null && second != null) {
+    if (finalStandings[round][seed] != null) {
       finalStandings[round][seed] = null;
     } else {
       finalStandings[round][seed] = second;
     }
     renderEndState();
     return;
-  } else if (first && !second) {
-    if (finalStandings[round][seed]) {
+  } else if (first != null && second == null) {
+    if (finalStandings[round][seed] != null) {
       finalStandings[round][seed] = null;
     } else {
       finalStandings[round][seed] = first;
@@ -109,16 +113,21 @@ function matchup(e) {
   }
 
   var leftChoice = document.querySelector('#chooser-left');
+  var leftChoiceCaption = document.querySelector('#chooser-left-caption');
   var rightChoice = document.querySelector('#chooser-right');
+  var rightChoiceCaption = document.querySelector('#chooser-right-caption');
   var clearButton = document.querySelector('#clear-button');
-  leftChoice.style.backgroundImage = "url('" + first + "')";
-  leftChoice.dataset.src = first;
+  leftChoice.style.backgroundImage = "url('" + ENTRANTS[first] + "')";
+  leftChoice.dataset.entrant = first;
   leftChoice.dataset.round = round;
   leftChoice.dataset.seed = seed;
-  rightChoice.style.backgroundImage = "url('" + second + "')";
-  rightChoice.dataset.src = second;
+  console.log(NAMES, first, second);
+  leftChoiceCaption.innerText = NAMES[first];
+  rightChoice.style.backgroundImage = "url('" + ENTRANTS[second] + "')";
+  rightChoice.dataset.entrant = second;
   rightChoice.dataset.round = round;
   rightChoice.dataset.seed = seed;
+  rightChoiceCaption.innerText = NAMES[second];
   clearButton.dataset.round = round;
   clearButton.dataset.seed = seed;
   document.querySelector('#chooser').style.display = 'block';
@@ -128,14 +137,14 @@ function renderEndState() {
   for (var i = 0; i <= ROUND_COUNT; i++) {
     for (var j = 0; j < Math.pow(2, ROUND_COUNT - i); j++) {
       var left = document.querySelector('#round-' + i + '-seed-' + j);
-      if (finalStandings[i][j]) {
-        left.src = finalStandings[i][j];
+      if (finalStandings[i][j] != null) {
+        left.src = ENTRANTS[finalStandings[i][j]];
       } else {
         left.src = 'circle.png';
       }
     }
   }
-  if (finalStandings[ROUND_COUNT][0]) {
+  if (finalStandings[ROUND_COUNT][0] != null) {
     document.querySelector('#round-' + ROUND_COUNT + '-seed-0').style.width = '200px';
     document.querySelector('#round-' + ROUND_COUNT + '-seed-0').style.height = '200px';
   } else {

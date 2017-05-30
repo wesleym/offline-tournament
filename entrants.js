@@ -33,6 +33,41 @@ var ENTRANTS = [
   "31.png",
 ];
 
+var NAMES = [
+  "Zero",
+  "One",
+  "Two",
+  "Three",
+  "Four",
+  "Five",
+  "Six",
+  "Seven",
+  "Eight",
+  "Nine",
+  "Ten",
+  "Eleven",
+  "Twelve",
+  "Thirteen",
+  "Fourteen",
+  "Fifteen",
+  "Sixteen",
+  "Seventeen",
+  "Eighteen",
+  "Nineteen",
+  "Twenty",
+  "Twenty-One",
+  "Twenty-Two",
+  "Twenty-Three",
+  "Twenty-Four",
+  "Twenty-Five",
+  "Twenty-Six",
+  "Twenty-Seven",
+  "Twenty-Eight",
+  "Twenty-Nine",
+  "Thirty",
+  "Thirty-One"
+];
+
 // You must have exactly 2, 4, 8, 16, ... entrants and no missing entrants to
 // disable byes
 var ENABLE_BYES = false;
